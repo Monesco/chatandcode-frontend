@@ -1,11 +1,11 @@
-Chat&Code
-Chat&Code is a full-stack web application built with React on the frontend and Express with SQLite on the backend. It provides a user-friendly chat interface where users can create an account, log in, and communicate via chat. The app uses Chakra UI for styling, ensuring a consistent and modern design.
+#Chat&Code
+##Chat&Code is a full-stack web application built with React on the frontend and Express with SQLite on the backend. It provides a user-friendly chat interface where users can create an account, log in, and communicate via chat. The app uses Chakra UI for styling, ensuring a consistent and modern design.
 
-author: Matheus Siqueira
+###Author: Matheus Siqueira
 
-Project Structure
--Backend
+-Project Structure
 
+###Backend
 ```
 chatandcode-backend/
 ├── config/
@@ -24,7 +24,7 @@ chatandcode-backend/
 └── users.db                        # SQLite database file
 ```
 
--Frontend
+###Frontend
 ```
 chatandcode-frontend/
 ├── public/
