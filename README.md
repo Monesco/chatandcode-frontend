@@ -1,11 +1,12 @@
-#Chat&Code
-##Chat&Code is a full-stack web application built with React on the frontend and Express with SQLite on the backend. It provides a user-friendly chat interface where users can create an account, log in, and communicate via chat. The app uses Chakra UI for styling, ensuring a consistent and modern design.
+# Chat&Code
+## Overview
+**Chat&Code** is a full-stack web application built with React on the frontend and Express with SQLite on the backend. It provides a user-friendly chat interface where users can create an account, log in, and communicate via chat. The app uses Chakra UI for styling, ensuring a consistent and modern design.
 
-###Author: Matheus Siqueira
+### Author: Matheus Siqueira
 
--Project Structure
+- Project Structure
 
-###Backend
+### Backend
 ```
 chatandcode-backend/
 ├── config/
@@ -24,7 +25,7 @@ chatandcode-backend/
 └── users.db                        # SQLite database file
 ```
 
-###Frontend
+### Frontend
 ```
 chatandcode-frontend/
 ├── public/
@@ -51,40 +52,42 @@ chatandcode-frontend/
 └── README.md                       # Project documentation
 ```
 
-#Getting Started
-##Prerequisites
--Node.js - Ensure you have Node.js installed. Download Node.js
--npm - Node Package Manager, which comes with Node.js.
+# Getting Started
+## Prerequisites
+- Node.js - Ensure you have Node.js installed. Download Node.js
+- npm - Node Package Manager, which comes with Node.js.
 
-#Backend Setup:
-Navigate to the chatandcode-backend directory:
+# Backend Setup:
+
+- Navigate to the chatandcode-backend directory:
 
 ```
 cd chatandcode-backend
 ```
 
-Install backend dependencies:
+- Install backend dependencies:
 
 ```
 npm install
 ```
 
-Start the backend server:
+- Start the backend server:
 
 ```
 npm start
 ```
 
-The backend server will run on http://localhost:5000.
+### The backend server will run on http://localhost:5000.
 
-Frontend Setup:
-Navigate to the chatandcode-frontend directory:
+# Frontend Setup:
+
+- Navigate to the chatandcode-frontend directory:
 
 ```
 cd chatandcode-frontend
 ```
 
-Install frontend dependencies:
+- Install frontend dependencies and start:
 
 ```
 npm install
@@ -93,29 +96,30 @@ npm install
 npm start
 ```
 
-The frontend application will run on http://localhost:3000.
+### The frontend application will run on http://localhost:3000.
 
-#Features:
+# Features:
 
 - User Authentication: Users can sign up, log in, and maintain sessions with JWT tokens.
 - Real-time Chat Interface: Users can create new chats, send and receive messages in real-time.
 - Responsive UI: The app is designed to work seamlessly across different screen sizes.
 - Modern Design: Styled with Chakra UI, providing a sleek and consistent look and feel.
 
-#Dependencies:
-##Backend:
+# Dependencies:
+## Backend:
 
-Express - A minimal and flexible Node.js web application framework.
-SQLite3 - A lightweight, disk-based database used for storing user and chat data.
-bcrypt - For hashing user passwords.
-jsonwebtoken - For generating and verifying JWT tokens.
-cors - Middleware to enable CORS for cross-origin requests.
+- Express - A minimal and flexible Node.js web application framework.
+- SQLite3 - A lightweight, disk-based database used for storing user and chat data.
+- bcrypt - For hashing user passwords.
+- jsonwebtoken - For generating and verifying JWT tokens.
+- cors - Middleware to enable CORS for cross-origin requests.
 
-##Frontend:
-React - A JavaScript library for building user interfaces.
-Chakra UI - A modern UI framework for React with easy-to-use components.
-Axios - Promise-based HTTP client for making API requests.
-React Router - For handling navigation within the app.
+## Frontend:
 
-License
-This project is licensed under the MIT License. See the LICENSE file for more information.
+- React - A JavaScript library for building user interfaces.
+- Chakra UI - A modern UI framework for React with easy-to-use components.
+- Axios - Promise-based HTTP client for making API requests.
+- React Router - For handling navigation within the app.
+
+## License
+### This project is licensed under the MIT License. See the LICENSE file for more information.
