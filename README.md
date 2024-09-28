@@ -4,8 +4,9 @@ Chat&Code is a full-stack web application built with React on the frontend and E
 author: Matheus Siqueira
 
 Project Structure
-bash
-Copy code
+-Backend
+
+```
 chatandcode-backend/
 ├── config/
 │   └── database.js                # Database configuration and initialization
@@ -21,7 +22,10 @@ chatandcode-backend/
 ├── package.json                    # Backend dependencies and scripts
 ├── server.js                       # Main server entry point
 └── users.db                        # SQLite database file
+```
 
+-Frontend
+```
 chatandcode-frontend/
 ├── public/
 │   └── index.html                  # Frontend root HTML file
@@ -45,48 +49,61 @@ chatandcode-frontend/
 ├── .env                            # Environment variables for the frontend
 ├── package.json                    # Frontend dependencies and scripts
 └── README.md                       # Project documentation
+```
 
-Getting Started
-Prerequisites
-Node.js - Ensure you have Node.js installed. Download Node.js
-npm - Node Package Manager, which comes with Node.js.
-Backend Setup:
+#Getting Started
+##Prerequisites
+-Node.js - Ensure you have Node.js installed. Download Node.js
+-npm - Node Package Manager, which comes with Node.js.
+
+#Backend Setup:
 Navigate to the chatandcode-backend directory:
 
+```
 cd chatandcode-backend
+```
 
 Install backend dependencies:
 
+```
 npm install
+```
 
 Start the backend server:
 
+```
 npm start
+```
 
 The backend server will run on http://localhost:5000.
 
 Frontend Setup:
 Navigate to the chatandcode-frontend directory:
 
+```
 cd chatandcode-frontend
+```
 
 Install frontend dependencies:
 
+```
 npm install
-
+```
+```
 npm start
+```
 
 The frontend application will run on http://localhost:3000.
 
-Features:
+#Features:
 
 - User Authentication: Users can sign up, log in, and maintain sessions with JWT tokens.
 - Real-time Chat Interface: Users can create new chats, send and receive messages in real-time.
 - Responsive UI: The app is designed to work seamlessly across different screen sizes.
 - Modern Design: Styled with Chakra UI, providing a sleek and consistent look and feel.
 
-Dependencies:
-Backend:
+#Dependencies:
+##Backend:
 
 Express - A minimal and flexible Node.js web application framework.
 SQLite3 - A lightweight, disk-based database used for storing user and chat data.
@@ -94,7 +111,7 @@ bcrypt - For hashing user passwords.
 jsonwebtoken - For generating and verifying JWT tokens.
 cors - Middleware to enable CORS for cross-origin requests.
 
-Frontend:
+##Frontend:
 React - A JavaScript library for building user interfaces.
 Chakra UI - A modern UI framework for React with easy-to-use components.
 Axios - Promise-based HTTP client for making API requests.
