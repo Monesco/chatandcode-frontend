@@ -12,18 +12,19 @@ const Message = ({ msg, username }) => {
   return (
     <HStack
       width="100%"
+      minWidth={"400px"}
       justifyContent={isUser ? 'flex-end' : 'flex-start'}
       alignItems="flex-start"
-      spacing={4}
-      paddingY={2}
+      spacing={2}
+      paddingY={1}
     >
       {!isUser && <Avatar size="sm" name="C&C" mt={1} />}
       <Box
-        bg={isUser ? 'blue.600' : 'gray.700'}
+        bg={isUser ? 'blue.400' : 'gray.700'}
         color="white"
         p={4}
         borderRadius="lg"
-        maxWidth="80%"
+        maxWidth="92%"
         wordBreak="break-word"
         overflowWrap="anywhere"
         overflow="hidden"

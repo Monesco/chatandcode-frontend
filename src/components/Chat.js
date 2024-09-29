@@ -14,7 +14,7 @@ import {
   updateChatTitle,
   saveUserMessage,
   saveBotMessage,
-  sendMessageToOpenAI,
+  sendMessageToLMStudio,
 } from '../api';
 import { estimateTokens } from '../utils';
 import { jwtDecode } from 'jwt-decode';
@@ -157,7 +157,7 @@ function Chat() {
         stream: true, // Enable streaming
       };
 
-      const response = await sendMessageToOpenAI(payload);
+      const response = await sendMessageToLMStudio(payload);
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder('utf-8');
@@ -205,7 +205,7 @@ function Chat() {
   };
 
   return (
-    <Flex height="100vh" bg="gray.900" color="white">
+    <Flex height="100vh"bg="gray.900" color="white">
       <Sidebar
         username={username}
         chats={chats}
@@ -224,7 +224,7 @@ function Chat() {
         />
         <Divider />
         <VStack
-          flex="1"
+          flex="auto"
           overflowY="auto"
           spacing={3}
           mt={4}

@@ -1,4 +1,3 @@
-import { jwtDecode } from 'jwt-decode';
 
 // Fetch URLs from env file
 const API_URL = process.env.REACT_APP_API_URL;
@@ -99,7 +98,7 @@ export const saveBotMessage = async (chatId, message) => {
   }
 };
 
-export const sendMessageToOpenAI = async (payload) => {
+export const sendMessageToLMStudio = async (payload) => {
   const response = await fetch(`${LM_STUDIO_URL}/v1/chat/completions`, {
     method: 'POST',
     headers: {

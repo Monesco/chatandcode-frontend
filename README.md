@@ -1,8 +1,8 @@
 # Chat&Code
 ## Overview
-**Chat&Code** is a full-stack web application built with React on the frontend and Express with SQLite on the backend. It provides a user-friendly chat interface where users can create an account, log in, and communicate via chat. The app uses Chakra UI for styling, ensuring a consistent and modern design.
+**Chat&Code** is a full-stack web application built with React on the frontend and Express with SQLite on the backend. It provides a user-friendly interface to connect to LM Studio and interact with LLM models where users can create an account, log in, and communicate via chat. The app uses Chakra UI for styling, ensuring a consistent and modern design. There is a database where chat history is stored and its loaded specifically for each user on demand. The passwords are encripted. This platform is great for deployament in a home enviroment or a small business where one LM Server can serve multiple users holding their chat history and saving on resources.
 
-### Author: Matheus Siqueira
+**Author: Matheus Siqueira**
 
 - Project Structure
 

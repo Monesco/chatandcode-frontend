@@ -29,7 +29,7 @@ const Sidebar = ({
     loadingChats,
 }) => {
     //Use media query to detect small screen size
-    const [isMinimized] = useMediaQuery('(max-width: 810px)');
+    const [isMinimized] = useMediaQuery('(max-width: 815px)');
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -62,9 +62,11 @@ const Sidebar = ({
             justifyContent="space-between"
             height="100vh"
             width={isMinimized ? '80px' : '20%'}
+            minWidth={isMinimized ? '80px' : '0%'}            
+            mr={isMinimized ? '20px' : '0px'}
             bg="gray.800"
             p={4}
-            overflowY="auto"
+            overflowY="hidden"
             transition="width 0.3s ease-in-out"
         >
             {/*Top Section*/}
@@ -80,7 +82,7 @@ const Sidebar = ({
                     transition="box-size 0.3s ease-in-out"
                 />
 
-                <Divider mb={2} />
+                <Divider mb={2} size={3} />
 
                 {/*Username's Chats Title/Icon */}
                 <Tooltip label={`${username}'s Chats`} placement="right" isDisabled={!isMinimized}>
@@ -112,26 +114,25 @@ const Sidebar = ({
                             size={'sm'}
                             variant="solid"
                             colorScheme="blue"
-                            justifyContent="center"
-                            borderRadius={'xl'}
-                            width={isMinimized ? 'auto' : '60%'}
+                            backgroundColor={"blue.300"}                            
+                            borderRadius={'2xl'}
+                            width={isMinimized ? 'auto' : '50%'}
                             onClick={handleNewChat}
                             leftIcon={isMinimized ? null : <AddIcon />}
-                            iconSpacing={isMinimized ? '0' : '4'}
+                            iconSpacing={isMinimized ? '0' : '1'}
                             fontFamily={'monospace'}
-                            overflow="hidden"
-                            textOverflow="ellipsis"
-                            whiteSpace="nowrap"
+                            overflow="hidden"                            
+                            
                             p={isMinimized ? '0' : '4'}
-                            alignSelf={isMinimized ? 'center' : 'center'}
+                            
                             transition="width 0.3s ease-in-out"
                         >
                             {isMinimized ? <AddIcon /> : 'New Chat'}
                         </Button>
                     </Tooltip>
                 </Flex>
-
-                <VStack align="start" spacing={2}>
+                
+                <VStack align="start" spacing={2} >
                     <Divider mt={2} />
 
                     {/*Chats List*/}
@@ -193,6 +194,7 @@ const Sidebar = ({
                         ))
                     )}
                 </VStack>
+                
             </Box>
 
             {/*Bottom Section*/}
@@ -212,7 +214,7 @@ const Sidebar = ({
                         overflow="hidden"
                         textOverflow="ellipsis"
                         whiteSpace="nowrap"
-                        p={isMinimized ? '0' : '4'}
+                        p={isMinimized ? '0' : '2'}
                         alignSelf="center"
                         transition="width 0.3s ease-in-out"
                     >
@@ -237,7 +239,7 @@ const Sidebar = ({
                         <VStack align="stretch" spacing={0}>
                             <Button
                                 variant="ghost"
-                                justifyContent="flex-start"
+                                justifyContent="flex-start"                                
                                 onClick={() => {
                                     handleDeleteChat(contextMenuChatId);
                                     setIsContextMenuOpen(false);

@@ -18,9 +18,15 @@ const ChatHeader = ({
   loadingModels,
 }) => {
   return (
-    <HStack justifyContent="space-between" mb={4}>
-      <Text fontSize="xl" fontFamily={'monospace'}>
-        Chatting with:  {selectedModel}
+    <HStack justifyContent="space-between" mb={4} w="100%">
+      <Text 
+        fontSize="xl" 
+        fontFamily="monospace" 
+        isTruncated 
+        maxWidth={{ base: '250px', md: '400px' }} 
+        whiteSpace="nowrap" 
+      >
+        Chatting with: {selectedModel}
       </Text>
       {loadingModels ? (
         <Spinner size="sm" />
@@ -29,10 +35,17 @@ const ChatHeader = ({
           <MenuButton
             as={Button}
             bg="gray.700"
-            fontFamily={'monospace'}
-            rightIcon={<ChevronDownIcon />}
+            fontFamily="monospace"
+            maxWidth="250px"
+            overflow="hidden"
+            paddingRight="10px" 
           >
-            {selectedModel || 'Select Model'}
+            <HStack spacing="2" w="100%" overflow="hidden">
+              <Text flex="1" isTruncated>
+                {selectedModel || 'Select Model'}
+              </Text>
+              <ChevronDownIcon />
+            </HStack>
           </MenuButton>
           <MenuList bg="gray.700" color="white">
             {models.map((model) => (
@@ -40,7 +53,7 @@ const ChatHeader = ({
                 key={model.id}
                 onClick={() => setSelectedModel(model.id)}
                 _hover={{ bg: 'gray.600' }}
-                fontFamily={'monospace'}
+                fontFamily="monospace"
               >
                 {model.id}
               </MenuItem>

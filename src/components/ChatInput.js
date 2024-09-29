@@ -13,7 +13,7 @@ const ChatInput = ({ input, setInput, handleSend, isDisabled }) => {
         isDisabled={isDisabled}
         fontFamily={"monospace"}
       />
-      <Button onClick={handleSend} colorScheme="green" isDisabled={isDisabled} fontFamily={"monospace"}>
+      <Button onClick={handleSend} colorScheme="green" isDisabled={isDisabled} fontFamily={"monospace"} backgroundColor={"green.400"}>
         Send
       </Button>
     </HStack>
