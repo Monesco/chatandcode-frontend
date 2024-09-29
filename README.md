@@ -95,8 +95,13 @@ npm install
 ```
 npm start
 ```
-
 ### The frontend application will run on http://localhost:3000.
+
+# LM Studio Server Setup:
+### Visit LM Studio web doc to learn about running their server
+
+- **Visit:** https://lmstudio.ai/docs/basics/server
+
 
 # Features:
 
