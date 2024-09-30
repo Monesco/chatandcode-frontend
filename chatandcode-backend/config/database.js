@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./users.db');
 
 
-// serieazilando a database pra execucao e criando as tabelas se preciso.
+//db serialization/creation/validation
 db.serialize(() => {
   db.run(`
     CREATE TABLE IF NOT EXISTS users (
@@ -28,6 +28,7 @@ db.serialize(() => {
       chat_id INTEGER,
       role TEXT,
       content TEXT,
+      image TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY(chat_id) REFERENCES chats(id)
     )

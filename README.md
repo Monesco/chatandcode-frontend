@@ -1,10 +1,9 @@
 # Chat&Code
 ## Overview
-**Chat&Code** is a full-stack web application built with React on the frontend and Express with SQLite on the backend. It provides a user-friendly interface to connect to LM Studio and interact with LLM models where users can create an account, log in, and communicate via chat. The app uses Chakra UI for styling, ensuring a consistent and modern design. There is a database where chat history is stored and its loaded specifically for each user on demand. The passwords are encripted. This platform is great for deployament in a home enviroment or a small business where one LM Server can serve multiple users holding their chat history and saving on resources.
-
+**Chat&Code** is a full-stack web application with a React-based frontend and an Express server using SQLite on the backend. It offers a seamless user experience for connecting to LM Studio and interacting with large language models (LLMs). Users can create accounts, log in, and engage in chat conversations, with each user's chat history stored securely in a database and loaded on demand. The application leverages Chakra UI for a modern and consistent interface, while ensuring password encryption for enhanced security. Ideal for deployment in home environments or small businesses, Chat&Code enables a single LM server to efficiently serve multiple users while managing resources and storing individual chat histories.
 **Author: Matheus Siqueira**
 
-- Project Structure
+# Project Structure
 
 ### Backend
 ```
@@ -102,6 +101,8 @@ npm start
 
 - **Visit:** https://lmstudio.ai/docs/basics/server
 
+### when running the server on LM Studio make sure to select allow CORS
+
 
 # Features:
 
@@ -109,6 +110,8 @@ npm start
 - Real-time Chat Interface: Users can create new chats, send and receive messages in real-time.
 - Responsive UI: The app is designed to work seamlessly across different screen sizes.
 - Modern Design: Styled with Chakra UI, providing a sleek and consistent look and feel.
+- Chat History
+- Multi model support
 
 # Dependencies:
 ## Backend:

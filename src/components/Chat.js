@@ -17,13 +17,15 @@ import {
   sendMessageToLMStudio,
 } from '../api';
 import { estimateTokens } from '../utils';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 
 function Chat() {
   const [models, setModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState('');
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+  const [imageData, setImageData] = useState(null);
   const navigate = useNavigate();
   const [loadingModels, setLoadingModels] = useState(true);
 
@@ -31,7 +33,7 @@ function Chat() {
   const [currentChatId, setCurrentChatId] = useState(null);
   const [loadingChats, setLoadingChats] = useState(true);
 
-  // Get username from token
+  // Get username
   const token = localStorage.getItem('token');
   const [username, setUsername] = useState('');
 
@@ -52,18 +54,18 @@ function Chat() {
 
     const initialize = async () => {
       try {
-        // Fetch models
+        // Get available models
         const modelsData = await fetchModels();
         setModels(modelsData);
         setSelectedModel(modelsData[0]?.id || '');
         setLoadingModels(false);
 
-        // Fetch user's chats
+        // Get user's chats
         const chatsData = await fetchChats();
         setChats(chatsData);
         setLoadingChats(false);
         if (chatsData.length > 0) {
-          // Load the latest chat by default
+          // Load the first chat by default
           selectChat(chatsData[0].id);
         }
       } catch (err) {
@@ -102,7 +104,7 @@ function Chat() {
       await deleteChat(chatId);
       setChats((prev) => prev.filter((chat) => chat.id !== chatId));
       if (chatId === currentChatId) {
-        // If the deleted chat was the current chat, clear messages
+        // If current chat is deleted, clear messages
         setCurrentChatId(null);
         setMessages([]);
       }
@@ -111,52 +113,92 @@ function Chat() {
     }
   };
 
+  const handleImageUpload = (file) => {
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setImageData(reader.result);
+    };
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImageData(null);
+  };
+
   const handleSend = async () => {
-    if (!input.trim()) return;
-    const userMessage = { role: 'user', content: input };
+    if (!input.trim() && !imageData) return;
+
+    const userMessage = {
+      role: 'user',
+      content: input,
+      image: imageData,
+    };
+
     const updatedMessages = [...messages, userMessage];
     setMessages(updatedMessages);
+
+    // Reset input and image
     setInput('');
+    setImageFile(null);
+    setImageData(null);
 
     try {
-      // Save user's message to backend
+      // Save user message to database
       await saveUserMessage(currentChatId, userMessage);
 
-      // Update chat title if it's the first user message
+      // Update chat title if it's the first message
       if (messages.length === 0) {
-        await updateChatTitle(currentChatId, userMessage.content);
+        const title = input || 'Image Message';
+        await updateChatTitle(currentChatId, title);
         setChats((prevChats) =>
           prevChats.map((chat) =>
-            chat.id === currentChatId
-              ? { ...chat, title: userMessage.content }
-              : chat
+            chat.id === currentChatId ? { ...chat, title } : chat
           )
         );
       }
 
-      // Estimate tokens and trim conversation
+      await sendMessageToModel(updatedMessages);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const sendMessageToModel = async (updatedMessages) => {
+    try {
+      // Estimate tokens and prepare messages to send
       let tokensCount = 0;
       let messagesToSend = [];
       const reverseMessages = [...updatedMessages].reverse();
-
+  
       for (const message of reverseMessages) {
-        const messageTokens = estimateTokens(JSON.stringify(message));
+        // Create a copy of the message without the image data
+        const messageForTokenEstimation = { ...message };
+        delete messageForTokenEstimation.image;
+  
+        const messageTokens = estimateTokens(JSON.stringify(messageForTokenEstimation));
         if (tokensCount + messageTokens > MAX_CONTEXT_TOKENS) {
           break;
         }
         tokensCount += messageTokens;
         messagesToSend.unshift(message);
       }
-
-      // Prepare API payload
+  
+      if (messagesToSend.length === 0) {
+        console.error('No messages to send after token estimation.');
+        return;
+      }
+  
+      // Payload for the model
       const payload = {
         model: selectedModel,
         messages: messagesToSend,
         temperature: 0.7,
         max_tokens: Math.min(MAX_TOTAL_TOKENS - tokensCount, 4096),
-        stream: true, // Enable streaming
+        stream: true,
       };
-
+  
       const response = await sendMessageToLMStudio(payload);
 
       const reader = response.body.getReader();
@@ -181,10 +223,18 @@ function Chat() {
           }
           try {
             const parsed = JSON.parse(message);
-            const content = parsed.choices[0].delta.content;
-            if (content) {
-              botMessage.content += content;
-              // Update the messages state
+            const delta = parsed.choices[0].delta;
+            if (delta.content) {
+              botMessage.content += delta.content;
+              // Update messages state
+              setMessages((prevMessages) => {
+                const updated = [...prevMessages];
+                updated[updated.length - 1] = { ...botMessage };
+                return updated;
+              });
+            } else if (delta.image) {
+              botMessage.image = delta.image;
+              // Update messages state
               setMessages((prevMessages) => {
                 const updated = [...prevMessages];
                 updated[updated.length - 1] = { ...botMessage };
@@ -197,7 +247,7 @@ function Chat() {
         }
       }
 
-      // Save bot's message to backend
+      // Save bot message to database
       await saveBotMessage(currentChatId, botMessage);
     } catch (error) {
       console.error(error);
@@ -205,7 +255,7 @@ function Chat() {
   };
 
   return (
-    <Flex height="100vh"bg="gray.900" color="white">
+    <Flex height="100vh" bg="gray.900" color="white" overflow={'hidden'}>
       <Sidebar
         username={username}
         chats={chats}
@@ -215,7 +265,7 @@ function Chat() {
         handleDeleteChat={handleDeleteChat}
         loadingChats={loadingChats}
       />
-      <Flex direction="column" width="80%" p={4}>
+      <Flex direction="column" width="100%" p={4}>
         <ChatHeader
           selectedModel={selectedModel}
           setSelectedModel={setSelectedModel}
@@ -224,7 +274,7 @@ function Chat() {
         />
         <Divider />
         <VStack
-          flex="auto"
+          flex="1"
           overflowY="auto"
           spacing={3}
           mt={4}
@@ -239,7 +289,10 @@ function Chat() {
           input={input}
           setInput={setInput}
           handleSend={handleSend}
+          handleImageUpload={handleImageUpload}
+          removeImage={removeImage}
           isDisabled={!currentChatId}
+          imageFile={imageFile}
         />
       </Flex>
     </Flex>

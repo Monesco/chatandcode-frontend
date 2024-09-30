@@ -3,22 +3,22 @@ const router = express.Router();
 const chatController = require('../controllers/chatController');
 const authenticateToken = require('../middleware/authenticateToken');
 
-// Get all chats
+//get ALL chats
 router.get('/chats', authenticateToken, chatController.getChats);
 
-// Create a new chat
+//new chat
 router.post('/chats', authenticateToken, chatController.createChat);
 
-// Get messages for a chat
+//get messages for a chat   
 router.get('/chats/:chatId/messages', authenticateToken, chatController.getMessages);
 
-// Save a message to a chat
+//save message to chat
 router.post('/chats/:chatId/messages', authenticateToken, chatController.saveMessage);
 
-// Delete a chat
+//delete chat
 router.delete('/chats/:chatId', authenticateToken, chatController.deleteChat);
 
-// Update chat title
+//chat title on frontend
 router.put('/chats/:chatId', authenticateToken, chatController.updateChatTitle);
 
 module.exports = router;

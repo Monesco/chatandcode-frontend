@@ -41,10 +41,11 @@ exports.getMessages = (req, res) => {
       if (!chat) return res.status(404).json({ error: 'Chat not found' });
 
       db.all(
-        `SELECT id, role, content, created_at FROM messages WHERE chat_id = ? ORDER BY created_at ASC`,
+        `SELECT id, role, content, image, created_at FROM messages WHERE chat_id = ? ORDER BY created_at ASC`,
         [chatId],
         (err, rows) => {
-          if (err) return res.status(500).json({ error: 'Internal server error' });
+          if (err)
+            return res.status(500).json({ error: 'Internal server error' });
           res.json({ messages: rows });
         }
       );
@@ -56,7 +57,7 @@ exports.getMessages = (req, res) => {
 exports.saveMessage = (req, res) => {
   const userId = req.user.id;
   const chatId = req.params.chatId;
-  const { role, content } = req.body;
+  const { role, content, image } = req.body; 
 
   db.get(
     `SELECT * FROM chats WHERE id = ? AND user_id = ?`,
@@ -66,10 +67,11 @@ exports.saveMessage = (req, res) => {
       if (!chat) return res.status(404).json({ error: 'Chat not found' });
 
       db.run(
-        `INSERT INTO messages (chat_id, role, content) VALUES (?, ?, ?)`,
-        [chatId, role, content],
+        `INSERT INTO messages (chat_id, role, content, image) VALUES (?, ?, ?, ?)`,
+        [chatId, role, content, image || null],
         function (err) {
-          if (err) return res.status(500).json({ error: 'Internal server error' });
+          if (err)
+            return res.status(500).json({ error: 'Internal server error' });
           res.status(201).json({ messageId: this.lastID });
         }
       );

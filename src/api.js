@@ -1,7 +1,9 @@
 
-// Fetch URLs from env file
+//rls from env
 const API_URL = process.env.REACT_APP_API_URL;
 const LM_STUDIO_URL = process.env.REACT_APP_LM_STUDIO_URL;
+
+
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
@@ -99,12 +101,42 @@ export const saveBotMessage = async (chatId, message) => {
 };
 
 export const sendMessageToLMStudio = async (payload) => {
+  // Adjust messages to match API requirements for images
+  const adjustedMessages = payload.messages.map((message) => {
+    if (message.image) {
+      // Structure the message content as an array of content objects
+      return {
+        role: message.role,
+        content: [
+          {
+            type: 'text',
+            text: message.content || '',
+          },
+          {
+            type: 'image_url',
+            image_url: { url: message.image }, 
+          },
+        ],
+      };
+    } else {
+      return {
+        role: message.role,
+        content: message.content,
+      };
+    }
+  });
+
+  const adjustedPayload = {
+    ...payload,
+    messages: adjustedMessages,
+  };
+
   const response = await fetch(`${LM_STUDIO_URL}/v1/chat/completions`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(adjustedPayload),
   });
 
   if (!response.ok) {

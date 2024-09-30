@@ -109,7 +109,7 @@ const Sidebar = ({
 
                 {/*New Chat Button/Icon*/}
                 <Flex justifyContent="center" alignItems="center" flexDirection="column">
-                    <Tooltip label="New Chat" placement="right" isDisabled={!isMinimized}>
+                    <Tooltip label="New Chat" placement="right" >
                         <Button
                             size={'sm'}
                             variant="solid"
@@ -127,12 +127,12 @@ const Sidebar = ({
                             
                             transition="width 0.3s ease-in-out"
                         >
-                            {isMinimized ? <AddIcon /> : 'New Chat'}
+                            {isMinimized ? <AddIcon /> : 'Chat'}
                         </Button>
                     </Tooltip>
                 </Flex>
                 
-                <VStack align="start" spacing={2} >
+                <VStack align="center" spacing={2} >
                     <Divider mt={2} />
 
                     {/*Chats List*/}
@@ -154,7 +154,7 @@ const Sidebar = ({
                             >
                                 {isMinimized ? (
                                     //Render as icon when minimized
-                                    <Tooltip label={chat.title} placement="right">
+                                    <Tooltip fontFamily={'monospace'} label={chat.title} placement="right">
                                         <IconButton
                                             icon={<ChatIcon />}
                                             size="md"
@@ -176,6 +176,7 @@ const Sidebar = ({
                                             overflow="hidden"
                                             textOverflow="ellipsis"
                                             whiteSpace="nowrap"
+                                            fontFamily={'monospace'}
                                         >
                                             {chat.title}
                                         </Button>
