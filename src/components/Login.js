@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa'; // Importing icons
-import logo from '../images/logo.webp';
+import logo from '../images/logo.png';
 
 const API_URL = process.env.REACT_APP_API_URL;
 

@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { AddIcon, CloseIcon, ChatIcon } from '@chakra-ui/icons';
 import { FiLogOut } from 'react-icons/fi';
-import logo from '../images/logo.webp';
+import logo from '../images/logo.png';
 import { useNavigate } from 'react-router-dom';
 
 const Sidebar = ({
@@ -85,7 +85,7 @@ const Sidebar = ({
                 <Divider mb={2} size={3} />
 
                 {/*Username's Chats Title/Icon */}
-                <Tooltip label={`${username}'s Chats`} placement="right" isDisabled={!isMinimized}>
+                <Tooltip label={`${username}'s Chats`} placement="right" isDisabled={!isMinimized} fontFamily={'monospace'}>
                     <Text
                         fontSize="lg"
                         mb={2}
